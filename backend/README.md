@@ -1,14 +1,14 @@
-# 🧠 Mood Tracker – Flask Backend
+# Mood Tracker – Flask Backend
 
 A simple Flask backend for logging and retrieving mood entries. Works well with mobile frontends like React Native.
 
 ---
 
-## 📦 Features
+## Features
 
 - Log moods with optional notes
 
-## 🚀 Getting Started
+## Installation
 
 ### 1. Clone the repo
 ```bash
