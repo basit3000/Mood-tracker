@@ -4,7 +4,7 @@ from datetime import datetime
 
 Base = declarative_base()
 
-class MoodEntry(base):
+class MoodEntry(Base):
     __tablename__ = 'mood_entries'
     id = Column(Integer, primary_key=True)
     mood = Column(String)
