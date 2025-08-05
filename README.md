@@ -4,3 +4,13 @@ A simple mood tracker app with a backend and mobile functionalities.
 
 [TO-DO]
 https://trello.com/b/HlrMXS2S/mood-tracker
+
+## How to setup (Windows)
+
+1. ```bash
+    .\gradlew.bat build
+   ```
+
+2. ```bash
+   docker-compose up --build
+   ```
