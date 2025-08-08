@@ -8,9 +8,23 @@ https://trello.com/b/HlrMXS2S/mood-tracker
 ## How to setup (Windows)
 
 1. ```bash
-    .\gradlew.bat build
+    ./gradlew.bat build
    ```
 
 2. ```bash
    docker-compose up --build
    ```
+
+# How to run (Windows)
+
+```bash
+docker-compose up
+```
+
+## For live changes (Windows)
+
+After running docker, use
+
+```bash
+./gradlew bootRun --continuous
+```

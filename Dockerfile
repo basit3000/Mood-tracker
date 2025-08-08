@@ -1,7 +1,15 @@
-FROM eclipse-temurin:17-jdk
+FROM gradle:8.7-jdk17
 
 WORKDIR /app
 
-COPY build/libs/*.jar app.jar
+COPY gradlew .
+COPY gradle gradle
+COPY build.gradle settings.gradle ./
 
-ENTRYPOINT [ "java", "-jar", "app.jar" ]
+RUN ./gradlew clean build -x test --no-daemon
+
+COPY . .
+
+EXPOSE 8080
+
+ENTRYPOINT ["./gradlew", "bootRun", "--no-daemon"]
