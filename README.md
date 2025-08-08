@@ -28,3 +28,8 @@ After running docker, use
 ```bash
 ./gradlew bootRun --continuous
 ```
+
+## If docker-compose fails because of gradle use this command
+```bash
+gradle wrapper
+```

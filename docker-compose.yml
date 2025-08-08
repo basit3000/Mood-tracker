@@ -31,9 +31,6 @@ services:
       SERVER_PORT: ${SPRING_DATA_SERVER_PORT}
     volumes:
       - ./src:/app/src
-      - ./src/main/java:/app/src/main/java
-      - ./src/main/resources:/app/src/main/resources
-      - ./build/classes:/app/build/classes
 
 volumes:
   mongo_data:
