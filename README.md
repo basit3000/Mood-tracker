@@ -15,7 +15,7 @@ https://trello.com/b/HlrMXS2S/mood-tracker
    docker-compose up --build
    ```
 
-# How to run (Windows)
+## How to run (Windows)
 
 ```bash
 docker-compose up
