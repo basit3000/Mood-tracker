@@ -1,29 +1,24 @@
 package com.example.app.model;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 
 
-@Entity
-@Table(name = "users")
-
+@Document("User")
 public class User 
 {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
 
-    @NotBlank
+
+    @Id
+    private String id;
+
+    
     private String name;
     private int age;
-    @NotBlank
+    
     private String email;
-    public Long getId() {
-        return id;
-    }
-    public void setId(Long id) {
-        this.id = id;
-    }
+    
     public String getName() {
         return name;
     }
@@ -43,17 +38,34 @@ public class User
         this.email = email;
     }
     public String getPassword() {
+
         return password;
     }
     public void setPassword(String password) {
+
         this.password = password;
     }
-    @NotBlank
     private String password;
     @Override
     public String toString() {
         return "User [id=" + id + ", name=" + name + ", age=" + age + ", email=" + email + ", password=" + password
                 + "]";
+    }
+    public User(String name, int age, String email, String password) {
+        this.name = name;
+        this.age = age;
+        this.email = email;
+        this.password = password;
+    }
+
+      public User() {
+        
+    }
+    public String getId() {
+        return id;
+    }
+    public void setId(String id) {
+        this.id = id;
     }
     
 }

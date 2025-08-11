@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: head"></head>
+<body>
+<div class="container">
+    <h2>Register</h2>
+    <form th:action="@{/Register}" th:object="${user}" method="post">
+    
+        <label>Email</label>
+        <input type="email" th:field="*{email}" required />
+        <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+
+        <label>Username</label>
+        <input type="text" th:field="*{name}" required />
+        <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+
+        <label>Age</label>
+        <input type="number" th:field="*{age}" required />
+        <div th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></div>
+
+        <label>Password</label>
+        <input type="password" th:field="*{password}" required />
+        <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+
+        <button type="submit">Register</button>
+    </form>
+</div>
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>
