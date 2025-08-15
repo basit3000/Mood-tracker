@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Mood Tracker</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            text-align: center;
+            margin-top: 50px;
+        }
+        .buttons {
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to Mood Tracker</h1>
+    <p>Track your daily emotions and improve your wellbeing</p>
+    
+    <div class="buttons">
+        <a th:href="@{/login}"><button>Login</button></a>
+        <a th:href="@{/Register}"><button>Register</button></a>
+    </div>
+</body>
+</html>
