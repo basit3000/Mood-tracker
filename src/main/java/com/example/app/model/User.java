@@ -10,15 +10,30 @@ public class User
 {
 
 
+    public User(String name, int age, String email, String role, String password) {
+        this.name = name;
+        this.age = age;
+        this.email = email;
+        this.role = role;
+        this.password = password;
+    }
     @Id
     private String id;
-
     
     private String name;
     private int age;
-    
     private String email;
+    private String role;
     
+    
+    
+    
+    public String getRole() {
+        return role;
+    }
+    public void setRole(String role) {
+        this.role = role;
+    }
     public String getName() {
         return name;
     }
@@ -51,12 +66,7 @@ public class User
         return "User [id=" + id + ", name=" + name + ", age=" + age + ", email=" + email + ", password=" + password
                 + "]";
     }
-    public User(String name, int age, String email, String password) {
-        this.name = name;
-        this.age = age;
-        this.email = email;
-        this.password = password;
-    }
+    
 
       public User() {
         
@@ -64,8 +74,6 @@ public class User
     public String getId() {
         return id;
     }
-    public void setId(String id) {
-        this.id = id;
-    }
+   
     
 }
