@@ -8,13 +8,14 @@ import com.example.app.repository.MoodRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
 
-@RestController
+@Controller
 @RequestMapping("/mood")
 public class MoodController {
 
@@ -33,15 +34,13 @@ public class MoodController {
 
   @GetMapping("/dashboard")
     public String showDashBoard(Model model) {
+    	
     	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     	String userEmail=auth.getName();
-
-      System.out.println("User name we get is xxxxxx"+ userEmail);
     	
     	Optional<User> user = userServices.findByEmail(userEmail);
  
     	model.addAttribute(user.get());
-    	
         return "dashboard"; 
     }
 

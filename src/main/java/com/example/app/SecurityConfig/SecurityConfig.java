@@ -1,5 +1,6 @@
 package com.example.app.SecurityConfig;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,11 +19,6 @@ public class SecurityConfig {
 		        return new BCryptPasswordEncoder();
 		    }
 	
-		    // Expose your custom service directly as a bean
-		    @Bean
-		    public CustomUserService customUserService() {
-		        return  new CustomUserService();
-		    }
 	
 		    // AuthenticationManager that uses the above beans
 		    @Bean

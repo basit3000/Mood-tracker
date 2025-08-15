@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.app.model.User;
 import com.example.app.repository.UserRepository;
+import com.mongodb.DuplicateKeyException;
 
 @Service
 public class UserServices{
@@ -59,13 +60,24 @@ public class UserServices{
 
     }
 
-    public   User save(User user)
+    public  User save(User user)
     {
-        user.setPassword( passwordEncoder.encode(user.getPassword()));
-        user.setRole("USER");
-        User newuser = userRepository.save( user);
-        return newuser;
+        try {
+             user.setPassword( passwordEncoder.encode(user.getPassword()));
+             user.setRole("USER");
+             User newuser = userRepository.save( user);
+            return newuser;
+        } catch (DuplicateKeyException e) {
+            throw new RuntimeException("Email already exists!");
+        }
     }
 
+
+    public void deleteUserByid(String id)
+    {
+
+        userRepository.deleteById(id);
+
+    }
     
 }

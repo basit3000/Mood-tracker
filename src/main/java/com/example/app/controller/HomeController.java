@@ -2,6 +2,8 @@ package com.example.app.controller;
 
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.app.Service.UserServices;
 import com.example.app.model.User;
+import com.example.app.repository.UserRepository;
 
 
 
@@ -23,14 +26,16 @@ public class HomeController {
 
     @Autowired
   UserServices userServices;
-
-    User user=new User();
+ 
+  User user=new User();
+    
+   
     
 
     @GetMapping("/home")
     public String homePage()
+
     {
-        
         return "home";
     }
 

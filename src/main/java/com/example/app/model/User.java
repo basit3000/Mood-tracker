@@ -1,6 +1,7 @@
 package com.example.app.model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 
@@ -22,6 +23,8 @@ public class User
     
     private String name;
     private int age;
+
+    @Indexed(unique = true) 
     private String email;
     private String role;
     
@@ -61,13 +64,15 @@ public class User
         this.password = password;
     }
     private String password;
-    @Override
-    public String toString() {
-        return "User [id=" + id + ", name=" + name + ", age=" + age + ", email=" + email + ", password=" + password
-                + "]";
-    }
+
+   
     
 
+      @Override
+    public String toString() {
+        return "User [id=" + id + ", name=" + name + ", age=" + age + ", email=" + email + ", role=" + role
+                + ", password=" + password + "]";
+    }
       public User() {
         
     }
