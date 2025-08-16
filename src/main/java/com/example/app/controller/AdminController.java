@@ -17,7 +17,6 @@ import com.example.app.model.User;
 public class AdminController {
     @Autowired
     UserServices userServices;
-    UserServices userServices;
 
     @GetMapping("/showAllUsers")
     public List<User> showAllUsers() {
@@ -28,8 +27,5 @@ public class AdminController {
     public void deleteById(@PathVariable String userId) {
         userServices.deleteUserByid(userId);
     } 
-    @DeleteMapping("delete/{userId}")
-    public void deleteById(@PathVariable String userId) {
-        userServices.deleteUserByid(userId);
-    } 
+    
 }
