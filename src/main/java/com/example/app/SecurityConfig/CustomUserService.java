@@ -14,7 +14,7 @@ import com.example.app.model.User;
 @Service
 public class CustomUserService implements UserDetailsService {
 
-@Autowired
+    @Autowired
     UserServices userServices;
 
     @Override
@@ -25,11 +25,11 @@ public class CustomUserService implements UserDetailsService {
         if (user.isEmpty()) {
             System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
             System.out.println("user is empty");
-             throw new UsernameNotFoundException("User not found with email: " + email);
-            
+            throw new UsernameNotFoundException("User not found with email: " + email);
         }
-                    System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-                    System.out.println("we get the user ");
+
+        System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+        System.out.println("we get the user ");
 
         return new CustomUserDetails(user.get());
 

@@ -12,18 +12,14 @@ import com.example.app.model.User;
 
 public class CustomUserDetails implements UserDetails  {
 
-
-
     private User user;
 
-    public CustomUserDetails(User user)
-    {
+    public CustomUserDetails(User user) {
         this.user=user;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        
         return List.of(new SimpleGrantedAuthority(user.getRole()));
     }
 
