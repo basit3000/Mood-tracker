@@ -1,13 +1,11 @@
 package com.example.app.controller;
 
+import com.example.app.SecurityConfig.UserAuth;
 import com.example.app.Service.UserServices;
 import com.example.app.model.Mood;
 import com.example.app.model.User;
 import com.example.app.repository.MoodRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,8 +17,12 @@ import java.util.Optional;
 @RequestMapping("/mood")
 public class MoodController {
 
+
+
   @Autowired
   UserServices userServices;
+  @Autowired
+  UserAuth userAuth;
   private final MoodRepository moodRepository;
 
   public MoodController(MoodRepository moodRepository) {
@@ -35,13 +37,29 @@ public class MoodController {
   @GetMapping("/dashboard")
   public String showDashBoard(Model model) {
     
-    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-    String userEmail=auth.getName();
-    	
-    Optional<User> user = userServices.findByEmail(userEmail);
- 
-    model.addAttribute(user.get());
-    return "dashboard"; 
+   String currentUserEmail = userAuth.getCurrentUserEmail();
+   Optional<User> user = userServices.findByEmail(currentUserEmail);
+   model.addAttribute(user.get());
+   return "dashboard"; 
   }
+
+
+  @GetMapping("/updateDetails")
+  public String updateDetails(Model model) {
+
+    String currentUserEmail = userAuth.getCurrentUserEmail();
+    Optional<User> userObj = userServices.findByEmail(currentUserEmail);
+    model.addAttribute("user", userObj.get());
+    return "updatedetails";
+  }
+
+   @PostMapping("/updateDetails")
+  public String updateDetails(@ModelAttribute("user") User user) {
+
+    userServices.updateDetails(user);
+
+    return "dashboard";
+  }
+  
   
 }

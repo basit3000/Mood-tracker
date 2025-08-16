@@ -23,14 +23,9 @@ public class CustomUserService implements UserDetailsService {
         Optional<User> user = userServices.findByEmail(email);
 
         if (user.isEmpty()) {
-            System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
             System.out.println("user is empty");
             throw new UsernameNotFoundException("User not found with email: " + email);
         }
-
-        System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-        System.out.println("we get the user ");
-
         return new CustomUserDetails(user.get());
 
     }

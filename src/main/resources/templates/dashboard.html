@@ -7,24 +7,52 @@
 <body>
     <div th:replace="fragments/navbar :: navbar"></div>
     <div class="container text-center">
-        <h2 th:text="'Welcome, ' + ${user.name} + '!'">Welcome User!</h2>
+        <h2 class="mb-3" th:text="'Welcome, ' + ${user.name} + '!'">Welcome User!</h2>
         <p class="lead">This is your dashboard.</p>
+
         <div class="row justify-content-center mt-4">
             <div class="col-md-6">
-                <div class="card shadow-sm mb-3">
+
+                <!-- Track Mood -->
+                <div class="card shadow-sm mb-3 border-0 rounded-3">
                     <div class="card-body">
                         <h5 class="card-title">Track Your Mood</h5>
                         <p class="card-text">Log your daily emotions and view your progress over time.</p>
-                        <a th:href="@{/mood/track}" class="btn btn-success">Track Mood</a>
+                        <a th:href="@{/mood/track}" 
+                           class="btn btn-success w-100 rounded-pill shadow-sm">
+                           ➕ Track Mood
+                        </a>
                     </div>
                 </div>
-                <div class="card shadow-sm mb-3">
+
+                <!-- View History -->
+                <div class="card shadow-sm mb-3 border-0 rounded-3">
                     <div class="card-body">
                         <h5 class="card-title">View Mood History</h5>
                         <p class="card-text">See your previous mood entries and trends.</p>
-                        <a th:href="@{/mood/history}" class="btn btn-primary">View History</a>
+                        <a th:href="@{/mood/history}" 
+                           class="btn btn-primary w-100 rounded-pill shadow-sm">
+                           📖 View History
+                        </a>
                     </div>
                 </div>
+
+
+
+
+
+
+                   <!-- Update Details -->
+                <div class="card shadow-sm mb-3 border-0 rounded-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Update Your Details</h5>
+                        <a th:href="@{/mood/updateDetails}" 
+                           class="btn btn-success w-100 rounded-pill shadow-sm">
+                           🔄 Update Details
+                        </a>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
