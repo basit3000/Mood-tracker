@@ -33,19 +33,15 @@ public class MoodController {
   }
 
   @GetMapping("/dashboard")
-    public String showDashBoard(Model model) {
+  public String showDashBoard(Model model) {
+    
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    String userEmail=auth.getName();
     	
-    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-    	String userEmail=auth.getName();
-    	
-    	Optional<User> user = userServices.findByEmail(userEmail);
+    Optional<User> user = userServices.findByEmail(userEmail);
  
-    	model.addAttribute(user.get());
-        return "dashboard"; 
-    }
-
-
-
-
-
+    model.addAttribute(user.get());
+    return "dashboard"; 
+  }
+  
 }

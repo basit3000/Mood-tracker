@@ -14,54 +14,39 @@ import com.mongodb.DuplicateKeyException;
 @Service
 public class UserServices{
 
-@Autowired
+    @Autowired
     PasswordEncoder passwordEncoder;
     
-    
     UserRepository userRepository;
-
 
     @Autowired
     public UserServices(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
-
-   public Optional<User> findByUsername(String username)
-    {
+   public Optional<User> findByUsername(String username) {
          return userRepository.findByName(username);
-        
     }
      
-    public Optional<User> findByEmail(String email)
-    {
+    public Optional<User> findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
    
-    public boolean existsByName(String username)
-    {
+    public boolean existsByName(String username) {
         return userRepository.existsByName(username);
     }
-
     
-    public boolean existsByEmail(String email)
-    {
-
+    public boolean existsByEmail(String email) {
         return userRepository.existsByEmail(email);
     }
     
-
-    public List<User> getAllUser()
-    {
+    public List<User> getAllUser() {
          List<User> users = userRepository.findAll();
          return users;
-        
-
     }
 
-    public  User save(User user)
-    {
+    public  User save(User user) {
         try {
              user.setPassword( passwordEncoder.encode(user.getPassword()));
              user.setRole("USER");
@@ -73,11 +58,8 @@ public class UserServices{
     }
 
 
-    public void deleteUserByid(String id)
-    {
-
+    public void deleteUserByid(String id) {
         userRepository.deleteById(id);
-
     }
     
 }

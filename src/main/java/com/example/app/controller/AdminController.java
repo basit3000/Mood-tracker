@@ -15,31 +15,16 @@ import com.example.app.model.User;
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
-
     @Autowired
-UserServices userServices;
+    UserServices userServices;
 
-@GetMapping("/showAllUsers")
-public List<User> showAllUsers()
-{
+    @GetMapping("/showAllUsers")
+    public List<User> showAllUsers() {
+        return userServices.getAllUser();
+    }
 
-    return userServices.getAllUser();
-}
-
-
-@DeleteMapping("delete/{userId}")
-public void deleteById(@PathVariable String userId)
-{
-     userServices.deleteUserByid(userId);
-}
-
-
-
-
-
-
-
-
-    
-    
+    @DeleteMapping("delete/{userId}")
+    public void deleteById(@PathVariable String userId) {
+        userServices.deleteUserByid(userId);
+    } 
 }
