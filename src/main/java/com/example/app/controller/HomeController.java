@@ -39,7 +39,7 @@ public class HomeController {
     @PostMapping("/register")
     public String RegisterPage(@ModelAttribute("user") User user) {   
         userServices.save(user);
-        return "redirect:/dashboard";
+        return "redirect:/public/login";
     }
     
 }

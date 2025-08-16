@@ -24,20 +24,20 @@ public class SecurityConfig {
 	}
 	
 	@Bean
-	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		http.csrf(csrf -> csrf.disable()).authorizeHttpRequests(auth -> auth
-		    .requestMatchers("/public/**")
-			.permitAll()
-		    .anyRequest().authenticated())
-		    .formLogin(form -> form
-		    .loginPage("/public/login")      // URL for our HTML page
-		    .loginProcessingUrl("/login") 
-			.usernameParameter("email")
-			.defaultSuccessUrl("/mood/dashboard", true) // Add this line
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.csrf(csrf -> csrf.disable()).authorizeHttpRequests(auth -> auth
+            .requestMatchers("/public/**", "/public/register", "/register", "/css/**", "/js/**")
+            .permitAll()
+            .anyRequest().authenticated())
+            .formLogin(form -> form
+            .loginPage("/public/login")     
+            .loginProcessingUrl("/login") 
+            .usernameParameter("email")
+            .defaultSuccessUrl("/mood/dashboard", true)
             .failureUrl("/public/login?error=true")
-			.permitAll())
-			.logout(logout -> logout.permitAll());
-		return http.build();
-	}
+            .permitAll())
+            .logout(logout -> logout.permitAll());
+        return http.build();
+    }
 
 }
