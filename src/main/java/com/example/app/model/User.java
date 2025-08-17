@@ -1,98 +1,117 @@
-package com.example.app.model;
+    package com.example.app.model;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
+    import org.springframework.data.annotation.Id;
+    import org.springframework.data.mongodb.core.index.Indexed;
+    import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.example.app.CustomValidations.AgeLimit;
+    import com.example.app.CustomValidations.AgeLimit;
+import com.example.app.CustomValidations.DuplicateEmail;
 import com.example.app.CustomValidations.StrongPwd;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 
-@Document("User")
-public class User {
 
-   
-
-    @Id
-    private String id;
-
-    @Indexed(unique = true) 
-    private String email;
-
-    @StrongPwd
-    private String password;
-    
-    @AgeLimit
-    private int age;
-
-    private String name;
-    private String role;
+    @Document("User")
+    public class User {
 
     
-   
 
+        @Id
+        private String id;
 
-     public User(String name, int age, String email, String role, String password) {
-        this.name = name;
-        this.age = age;
-        this.email = email;
-        this.role = role;
-        this.password = password;
-    }
-    
-    public String getRole() {
-        return role;
-    }
+        @Indexed(unique = true) 
+        @Email
+        @DuplicateEmail
+        private String email;
 
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public String getName() {
+        @StrongPwd
+        @NotBlank
+        private String password;
         
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
+        @NotNull(message = "Age is required")
+        @AgeLimit
+        private Integer age;
 
-    public int getAge() {
-        return age;
-    }
+        private String name;
+        private String role;
 
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-
-    @Override
-    public String toString() {
-        return "User [id=" + id + ", name=" + name + ", age=" + age + ", email=" + email + ", role=" + role
-                + ", password=" + password + "]";
-    }
-
-      public User() {   
-    }
-
-    public String getId() {
-        return id;
-    }  
+        
     
-}
+
+
+        
+        
+        public User(String email, @NotBlank String password, @NotNull(message = "Age is required") Integer age,
+                String name, String role) {
+            this.email = email;
+            this.password = password;
+            this.age = age;
+            this.name = name;
+            this.role = role;
+        }
+
+        @Override
+        public String toString() {
+            return "User [id=" + id + ", email=" + email + ", password=" + password + ", age=" + age + ", name=" + name
+                    + ", role=" + role + "]";
+        }
+
+        public Integer getAge() {
+            return age;
+        }
+
+        public void setAge(Integer age) {
+            this.age = age;
+        }
+
+        public String getRole() {
+            return role;
+        }
+
+        public void setRole(String role) {
+            this.role = role;
+        }
+
+        public String getName() {
+            
+            return name;
+        }
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        
+
+        public String getEmail() {
+            return email;
+        }
+
+        public void setEmail(String email) {
+            this.email = email;
+        }
+
+        public String getPassword() {
+            return password;
+        }
+
+        public void setPassword(String password) {
+            this.password = password;
+        }
+
+
+        
+        public User() {   
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }  
+        
+    }
