@@ -4,28 +4,42 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.example.app.CustomValidations.AgeLimit;
+import com.example.app.CustomValidations.StrongPwd;
+
 
 
 @Document("User")
 public class User {
 
-    public User(String name, int age, String email, String role, String password) {
+   
+
+    @Id
+    private String id;
+
+    @Indexed(unique = true) 
+    private String email;
+
+    @StrongPwd
+    private String password;
+    
+    @AgeLimit
+    private int age;
+
+    private String name;
+    private String role;
+
+    
+   
+
+
+     public User(String name, int age, String email, String role, String password) {
         this.name = name;
         this.age = age;
         this.email = email;
         this.role = role;
         this.password = password;
     }
-
-    @Id
-    private String id;
-    
-    private String name;
-    private int age;
-
-    @Indexed(unique = true) 
-    private String email;
-    private String role;
     
     public String getRole() {
         return role;
@@ -67,7 +81,6 @@ public class User {
         this.password = password;
     }
 
-    private String password;
 
     @Override
     public String toString() {

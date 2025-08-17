@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.example.app.Service.UserServices;
 import com.example.app.model.User;
 
+import jakarta.validation.Valid;
+
 @Controller
 @RequestMapping("/public")
 public class HomeController {
@@ -37,7 +39,7 @@ public class HomeController {
     }
 
     @PostMapping("/register")  
-    public String RegisterPage(@ModelAttribute("user") User user) {   
+    public String RegisterPage(@Valid @ModelAttribute("user") User user) {   
         userServices.save(user);
         return "redirect:/public/login";
     }
