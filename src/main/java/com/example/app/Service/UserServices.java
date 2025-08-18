@@ -1,4 +1,4 @@
-package com.example.app.Service;
+package com.example.app.service;
 
 import java.util.List;
 import java.util.Optional;
@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.example.app.SecurityConfig.UserAuth;
+import com.example.app.securityConfig.UserAuth;
 import com.example.app.model.User;
 import com.example.app.repository.UserRepository;
 import com.mongodb.DuplicateKeyException;
@@ -77,10 +77,11 @@ public class UserServices{
     }
 
 
-    public boolean ConfirmPassword(String email, String pwd){
+    public boolean ConfirmPassword(String email, String rawPwd){
         Optional<User> byEmail = findByEmail(email);
-        boolean isPwdConfirm = byEmail.get().getPassword().equals(pwd);
-        return  isPwdConfirm;
+        boolean matches = passwordEncoder.matches(rawPwd,byEmail.get().getPassword());
+        return matches;
+        
     }
     
 }

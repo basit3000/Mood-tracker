@@ -1,4 +1,4 @@
-package com.example.app.CustomValidations;
+package com.example.app.customValidations;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;

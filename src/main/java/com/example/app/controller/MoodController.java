@@ -1,7 +1,7 @@
 package com.example.app.controller;
 
-import com.example.app.SecurityConfig.UserAuth;
-import com.example.app.Service.UserServices;
+import com.example.app.securityConfig.UserAuth;
+import com.example.app.service.UserServices;
 import com.example.app.model.Mood;
 import com.example.app.model.User;
 import com.example.app.repository.MoodRepository;
@@ -46,7 +46,7 @@ public class MoodController {
 
 
   @GetMapping("/updateDetails")
-  public String updateDetails(Model model, BindingResult bindingResult) {
+  public String updateDetails(Model model) {
 
     String currentUserEmail = userAuth.getCurrentUserEmail();
     Optional<User> userObj = userServices.findByEmail(currentUserEmail);

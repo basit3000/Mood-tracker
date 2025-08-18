@@ -1,4 +1,4 @@
-package com.example.app.SecurityConfig;
+package com.example.app.securityConfig;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;

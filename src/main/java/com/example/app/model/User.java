@@ -1,12 +1,11 @@
-    package com.example.app.model;
+package com.example.app.model;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-    import org.springframework.data.annotation.Id;
-    import org.springframework.data.mongodb.core.index.Indexed;
-    import org.springframework.data.mongodb.core.mapping.Document;
-
-    import com.example.app.CustomValidations.AgeLimit;
-import com.example.app.CustomValidations.DuplicateEmail;
-import com.example.app.CustomValidations.StrongPwd;
+import com.example.app.customValidations.AgeLimit;
+import com.example.app.customValidations.DuplicateEmail;
+import com.example.app.customValidations.StrongPwd;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

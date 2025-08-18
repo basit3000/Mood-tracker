@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.example.app.Service.UserServices;
+import com.example.app.service.UserServices;
 import com.example.app.model.User;
 
 import jakarta.validation.Valid;

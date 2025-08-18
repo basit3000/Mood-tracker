@@ -1,4 +1,4 @@
-package com.example.app.SecurityConfig;
+package com.example.app.securityConfig;
 
 import java.util.Optional;
 
@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.example.app.Service.UserServices;
+import com.example.app.service.UserServices;
 import com.example.app.model.User;
 
 @Service

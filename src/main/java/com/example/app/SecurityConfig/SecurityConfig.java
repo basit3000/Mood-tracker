@@ -1,4 +1,4 @@
-package com.example.app.SecurityConfig;
+package com.example.app.securityConfig;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
