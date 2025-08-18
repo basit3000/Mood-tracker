@@ -8,6 +8,7 @@ import com.example.app.repository.MoodRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
@@ -45,7 +46,7 @@ public class MoodController {
 
 
   @GetMapping("/updateDetails")
-  public String updateDetails(Model model) {
+  public String updateDetails(Model model, BindingResult bindingResult) {
 
     String currentUserEmail = userAuth.getCurrentUserEmail();
     Optional<User> userObj = userServices.findByEmail(currentUserEmail);
@@ -54,11 +55,17 @@ public class MoodController {
   }
 
    @PostMapping("/updateDetails")
-  public String updateDetails(@ModelAttribute("user") User user) {
+  public String updateDetails(@ModelAttribute("user") User user, BindingResult bindingResult, Model model) {
 
-    userServices.updateDetails(user);
-
-    return "dashboard";
+    String email= userAuth.getCurrentUserEmail();
+    boolean confirmed=userServices.ConfirmPassword(email, user.getPassword());
+    if (confirmed) {
+      userServices.updateDetails(user);
+      return "dashboard";
+    }
+  
+    bindingResult.rejectValue("password", "error.user", "Password does not match");
+    return "updatedetails";
   }
   
   

@@ -27,7 +27,7 @@
 
 
             <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
+                <label for="password" class="form-label">Confirm Your Password</label>
                 <input type="password" th:field="*{password}" id="password" class="form-control" required />
                 <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-danger small"></div>
             </div>

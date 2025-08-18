@@ -66,8 +66,7 @@ public class UserServices{
         userRepository.deleteById(id);
     }
 
-    public void updateDetails(User user)
-    {
+    public void updateDetails(User user){
         Optional<User> oldUser = findByEmail(userAuth.getCurrentUserEmail());
         User oldUserObj = oldUser.get();
         oldUserObj.setAge(user.getAge());
@@ -75,6 +74,13 @@ public class UserServices{
         oldUserObj.setPassword(user.getPassword());
         
         save(oldUserObj);
+    }
+
+
+    public boolean ConfirmPassword(String email, String pwd){
+        Optional<User> byEmail = findByEmail(email);
+        boolean isPwdConfirm = byEmail.get().getPassword().equals(pwd);
+        return  isPwdConfirm;
     }
     
 }
