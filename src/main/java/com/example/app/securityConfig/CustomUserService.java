@@ -1,0 +1,33 @@
+package com.example.app.securityConfig;
+
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+
+import com.example.app.service.UserServices;
+import com.example.app.model.User;
+
+@Service
+public class CustomUserService implements UserDetailsService {
+
+    @Autowired
+    UserServices userServices;
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        
+        Optional<User> user = userServices.findByEmail(email);
+
+        if (user.isEmpty()) {
+            System.out.println("user is empty");
+            throw new UsernameNotFoundException("User not found with email: " + email);
+        }
+        return new CustomUserDetails(user.get());
+
+    }
+    
+}
