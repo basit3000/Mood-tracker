@@ -1,6 +1,7 @@
 package com.example.app.controller;
 
 import com.example.app.securityConfig.UserAuth;
+import com.example.app.service.MoodServices;
 import com.example.app.service.UserServices;
 import com.example.app.model.Mood;
 import com.example.app.model.User;
@@ -22,8 +23,14 @@ public class MoodController {
 
   @Autowired
   UserServices userServices;
+  
+  UserAuth userAuth=new UserAuth();
   @Autowired
-  UserAuth userAuth;
+  MoodServices moodServices;
+
+  
+  String userEmail;
+
   private final MoodRepository moodRepository;
 
   public MoodController(MoodRepository moodRepository) {
@@ -38,8 +45,9 @@ public class MoodController {
   @GetMapping("/dashboard")
   public String showDashBoard(Model model) {
     
-   String currentUserEmail = userAuth.getCurrentUserEmail();
-   Optional<User> user = userServices.findByEmail(currentUserEmail);
+   userEmail=userAuth.getCurrentUserEmail();
+
+   Optional<User> user = userServices.findByEmail(userEmail);
    model.addAttribute(user.get());
    return "dashboard"; 
   }
@@ -48,8 +56,7 @@ public class MoodController {
   @GetMapping("/updateDetails")
   public String updateDetails(Model model) {
 
-    String currentUserEmail = userAuth.getCurrentUserEmail();
-    Optional<User> userObj = userServices.findByEmail(currentUserEmail);
+    Optional<User> userObj = userServices.findByEmail(userEmail);
     model.addAttribute("user", userObj.get());
     return "updatedetails";
   }
@@ -57,8 +64,7 @@ public class MoodController {
    @PostMapping("/updateDetails")
   public String updateDetails(@ModelAttribute("user") User user, BindingResult bindingResult, Model model) {
 
-    String email= userAuth.getCurrentUserEmail();
-    boolean confirmed=userServices.ConfirmPassword(email, user.getPassword());
+    boolean confirmed=userServices.ConfirmPassword(userEmail, user.getPassword());
     if (confirmed) {
       userServices.updateDetails(user);
       return "dashboard";
@@ -68,5 +74,31 @@ public class MoodController {
     return "updatedetails";
   }
   
+  @GetMapping("/addMoodPage")
+  public String addMoodPage(Model model){
+    model.addAttribute("mood", new Mood());
+    return "addMoodPage";
+  }
   
+  @PostMapping("/addMoodPage")
+  public String addMoodPage(@ModelAttribute("mood") Mood mood){
+    moodServices.saveMood(mood,userEmail);
+    
+    return "redirect:/mood/dashboard";
+  }
+
+  @GetMapping("/history")
+  public String historyP(Model model){
+    List<Mood> userMoodList = moodServices.findByUserId(userEmail);
+    model.addAttribute("userMoodList", userMoodList);
+    System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+    for (Mood mood : userMoodList) {
+      System.out.println(mood.toString());
+    }
+    return "history";
+  }
+
+  
+  
+
 }

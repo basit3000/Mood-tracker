@@ -71,6 +71,7 @@ public class UserServices{
         User oldUserObj = oldUser.get();
         oldUserObj.setAge(user.getAge());
         oldUserObj.setName(user.getName());
+        oldUserObj.setTimezone(user.getTimezone());
         oldUserObj.setPassword(user.getPassword());
         
         save(oldUserObj);

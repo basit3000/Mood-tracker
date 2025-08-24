@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Mood History</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        .mood-card { transition: 0.3s; }
+        .mood-card:hover { transform: scale(1.02); }
+        .mood-happy { background-color: #d4edda; }
+        .mood-neutral { background-color: #fff3cd; }
+        .mood-sad { background-color: #d1ecf1; }
+        .mood-angry { background-color: #f8d7da; }
+        .mood-icon { font-size: 1.8rem; margin-right: 10px; }
+        .note-text { font-style: italic; color: #555; }
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+    <h2 class="mb-4">Mood History</h2>
+    <div class="row">
+        <!-- Loop through moods -->
+        <div class="col-md-4 mb-3" th:each="mood : ${userMoodList}">
+            <div class="card mood-card"
+                 th:classappend="${mood.feel == 'Happy' ? 'mood-happy' 
+                                : (mood.feel == 'Neutral' ? 'mood-neutral' 
+                                : (mood.feel == 'Sad' ? 'mood-sad' : 'mood-angry'))}">
+                <div class="card-body">
+                    <h5 class="card-title d-flex align-items-center">
+                        <span class="mood-icon" 
+                              th:utext="${mood.feel == 'Happy' ? '&#128522;' 
+                                       : (mood.feel == 'Neutral' ? '&#128528;' 
+                                       : (mood.feel == 'Sad' ? '&#128546;' : '&#128545;'))}">
+                            <!-- Emoji displayed -->
+                        </span>
+                        <span th:text="${mood.feel}">Mood</span>
+                    </h5>
+                    <p class="card-text mb-1" th:text="${#temporals.format(mood.date, 'MMM dd, yyyy hh:mm a')}">
+                        Date
+                    </p>
+                    <p class="note-text" th:text="${mood.note}">No note provided</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

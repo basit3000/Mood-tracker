@@ -33,30 +33,20 @@ import jakarta.validation.constraints.NotNull;
         @NotNull(message = "Age is required")
         @AgeLimit
         private Integer age;
-
+        
         private String name;
         private String role;
 
+        private String timezone;
         
     
 
 
         
         
-        public User(String email, @NotBlank String password, @NotNull(message = "Age is required") Integer age,
-                String name, String role) {
-            this.email = email;
-            this.password = password;
-            this.age = age;
-            this.name = name;
-            this.role = role;
-        }
+      
 
-        @Override
-        public String toString() {
-            return "User [id=" + id + ", email=" + email + ", password=" + password + ", age=" + age + ", name=" + name
-                    + ", role=" + role + "]";
-        }
+        
 
         public Integer getAge() {
             return age;
@@ -111,6 +101,20 @@ import jakarta.validation.constraints.NotNull;
 
         public void setId(String id) {
             this.id = id;
+        }
+
+        public String getTimezone() {
+            return timezone;
+        }
+
+        public void setTimezone(String time) {
+            timezone = time;
+        }
+
+        @Override
+        public String toString() {
+            return "User [id=" + id + ", email=" + email + ", password=" + password + ", age=" + age + ", name=" + name
+                    + ", role=" + role + ", Timezone=" + timezone + "]";
         }  
         
     }

@@ -26,6 +26,40 @@
                 <input type="number" th:field="*{age}" id="age" class="form-control" required />
                 <div th:if="${#fields.hasErrors('age')}" th:errors="*{age}" class="text-danger small"></div>
             </div>
+
+            <!-- Time Zone Selection -->
+<div class="mb-4">
+    <label for="timezone" class="form-label">
+        <i class="fas fa-globe-americas timezone-icon"></i>Select Your Time Zone
+    </label>
+    <select class="form-select" id="timezone" th:field="*{timezone}" required>
+        <option value="" selected disabled>Select your time zone</option>
+        <optgroup label="Americas">
+            <option value="America/New_York">Eastern Time (ET) - New York</option>
+            <option value="America/Chicago">Central Time (CT) - Chicago</option>
+            <option value="America/Denver">Mountain Time (MT) - Denver</option>
+            <option value="America/Los_Angeles">Pacific Time (PT) - Los Angeles</option>
+            <option value="America/Anchorage">Alaska Time (AKT) - Anchorage</option>
+            <option value="Pacific/Honolulu">Hawaii Time (HT) - Honolulu</option>
+        </optgroup>
+        <optgroup label="Europe & Africa">
+            <option value="Europe/London">Greenwich Mean Time (GMT) - London</option>
+            <option value="Europe/Paris">Central European Time (CET) - Paris</option>
+            <option value="Europe/Athens">Eastern European Time (EET) - Athens</option>
+            <option value="Africa/Cairo">Eastern European Time (EET) - Cairo</option>
+            <option value="Africa/Johannesburg">South Africa Standard Time (SAST) - Johannesburg</option>
+        </optgroup>
+        <optgroup label="Asia & Pacific">
+            <option value="Asia/Dubai">Gulf Standard Time (GST) - Dubai</option>
+            <option value="Asia/Mumbai">India Standard Time (IST) - Mumbai</option>
+            <option value="Asia/Singapore">Singapore Time (SGT) - Singapore</option>
+            <option value="Asia/Tokyo">Japan Standard Time (JST) - Tokyo</option>
+            <option value="Australia/Sydney">Australian Eastern Time (AET) - Sydney</option>
+        </optgroup>
+    </select>
+    <div th:if="${#fields.hasErrors('timezone')}" th:errors="*{timezone}" class="text-danger small mt-1"></div>
+</div>
+
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
                 <input type="password" th:field="*{password}" id="password" class="form-control" required />
