@@ -9,10 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document("mood")
 public class Mood {
   
-  @Override
-  public String toString() {
-    return "Mood [id=" + id + ", feel=" + feel + ", userId=" + userId + ", note=" + note + ", date=" + date + "]";
-  }
+  
   @Id
   private String id;
   private String feel;
@@ -29,6 +26,16 @@ public class Mood {
   }
  
 
+    public String getId() {
+    return id;
+  }
+
+
+
+  public void setId(String id) {
+    this.id = id;
+  }
+
 
   public String getFeel() {
     return feel;
@@ -42,11 +49,7 @@ public class Mood {
   public void setUserId(String userId) {
     this.userId = userId;
   }
-  public Mood() {
-  }
-
-
-
+  
   public String getNote() {
     return note;
   }
@@ -60,6 +63,14 @@ public class Mood {
     this.date = date;
   }
   
+
+
+  public Mood() {
+  }
+  @Override
+  public String toString() {
+    return "Mood [id=" + id + ", feel=" + feel + ", userId=" + userId + ", note=" + note + ", date=" + date + "]";
+  }
   
 
 }

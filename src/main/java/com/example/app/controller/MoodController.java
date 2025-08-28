@@ -89,16 +89,16 @@ public class MoodController {
 
   @GetMapping("/history")
   public String historyP(Model model){
-    List<Mood> userMoodList = moodServices.findByUserId(userEmail);
+    List<Mood> userMoodList = moodServices.UserHistoryByEmail(userEmail);
     model.addAttribute("userMoodList", userMoodList);
-    System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-    for (Mood mood : userMoodList) {
-      System.out.println(mood.toString());
-    }
     return "history";
   }
 
   
-  
+  @PostMapping("/deleteNote/{id}")
+  public String deleteNote(@PathVariable("id") String id){
+    moodServices.deleteNote(id);
+     return "redirect:/mood/history";
+  }
 
 }

@@ -2,50 +2,310 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mood History</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        .mood-card { transition: 0.3s; }
-        .mood-card:hover { transform: scale(1.02); }
-        .mood-happy { background-color: #d4edda; }
-        .mood-neutral { background-color: #fff3cd; }
-        .mood-sad { background-color: #d1ecf1; }
-        .mood-angry { background-color: #f8d7da; }
-        .mood-icon { font-size: 1.8rem; margin-right: 10px; }
-        .note-text { font-style: italic; color: #555; }
+        :root {
+            --happy-color: #d4edda;
+            --neutral-color: #fff3cd;
+            --sad-color: #d1ecf1;
+            --angry-color: #f8d7da;
+            --bored-color: #e2e3e5;
+            --excited-color: #f8d7e6;
+            --calm-color: #d6eaf8;
+            --happy-dark: #c3e6cb;
+            --neutral-dark: #ffeaa7;
+            --sad-dark: #bee5eb;
+            --angry-dark: #f5c6cb;
+            --bored-dark: #d6d8db;
+            --excited-dark: #f5b0d1;
+            --calm-dark: #aed6f1;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .navbar {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+        }
+        
+        .mood-card {
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: none;
+            border-radius: 12px;
+            overflow: hidden;
+            height: 100%;
+        }
+        
+        .mood-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .mood-happy {
+            background: linear-gradient(to bottom right, var(--happy-color), var(--happy-dark));
+        }
+        
+        .mood-neutral {
+            background: linear-gradient(to bottom right, var(--neutral-color), var(--neutral-dark));
+        }
+        
+        .mood-sad {
+            background: linear-gradient(to bottom right, var(--sad-color), var(--sad-dark));
+        }
+        
+        .mood-angry {
+            background: linear-gradient(to bottom right, var(--angry-color), var(--angry-dark));
+        }
+        
+        .mood-bored {
+            background: linear-gradient(to bottom right, var(--bored-color), var(--bored-dark));
+        }
+        
+        .mood-excited {
+            background: linear-gradient(to bottom right, var(--excited-color), var(--excited-dark));
+        }
+        
+        .mood-calm {
+            background: linear-gradient(to bottom right, var(--calm-color), var(--calm-dark));
+        }
+        
+        .mood-icon {
+            font-size: 2rem;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .note-text {
+            font-style: italic;
+            color: #555;
+            border-left: 3px solid rgba(0, 0, 0, 0.1);
+            padding-left: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            padding: 10px;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .empty-state i {
+            font-size: 5rem;
+            color: #6c757d;
+            margin-bottom: 20px;
+        }
+        
+        .empty-state h3 {
+            color: #495057;
+            margin-bottom: 15px;
+        }
+        
+        .empty-state p {
+            color: #6c757d;
+            font-size: 1.1rem;
+            max-width: 500px;
+            margin: 0 auto 30px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            border: none;
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: transform 0.2s;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .date-badge {
+            background: rgba(0, 0, 0, 0.1);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        
+        .filter-section {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 25px;
+        }
+        
+        /* Confirmation modal styles */
+        .modal-content {
+            border-radius: 15px;
+            border: none;
+        }
+        
+        .modal-header {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+        }
+        
+        .btn-outline-danger:hover {
+            background-color: #dc3545;
+            color: white;
+        }
+        
+        .btn-outline-secondary:hover {
+            background-color: #6c757d;
+            color: white;
+        }
     </style>
 </head>
 <body>
-<div class="container mt-5">
-    <h2 class="mb-4">Mood History</h2>
-    <div class="row">
-        <!-- Loop through moods -->
-        <div class="col-md-4 mb-3" th:each="mood : ${userMoodList}">
-            <div class="card mood-card"
-                 th:classappend="${mood.feel == 'Happy' ? 'mood-happy' 
-                                : (mood.feel == 'Neutral' ? 'mood-neutral' 
-                                : (mood.feel == 'Sad' ? 'mood-sad' : 'mood-angry'))}">
-                <div class="card-body">
-                    <h5 class="card-title d-flex align-items-center">
-                        <span class="mood-icon" 
-                              th:utext="${mood.feel == 'Happy' ? '&#128522;' 
-                                       : (mood.feel == 'Neutral' ? '&#128528;' 
-                                       : (mood.feel == 'Sad' ? '&#128546;' : '&#128545;'))}">
-                            <!-- Emoji displayed -->
-                        </span>
-                        <span th:text="${mood.feel}">Mood</span>
-                    </h5>
-                    <p class="card-text mb-1" th:text="${#temporals.format(mood.date, 'MMM dd, yyyy hh:mm a')}">
-                        Date
-                    </p>
-                    <p class="note-text" th:text="${mood.note}">No note provided</p>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-brain me-2"></i>MoodTracker
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-home me-1"></i> Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#"><i class="fas fa-history me-1"></i> History</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-chart-line me-1"></i> Analytics</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-user me-1"></i> Profile</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mb-5">
+        <div class="row mb-4">
+            <div class="col-md-8 mx-auto text-center">
+                <h2 class="fw-bold">Your Mood History</h2>
+                <p class="text-muted">Track your emotional journey over time</p>
+            </div>
+        </div>
+
+        <!-- Mood History Section -->
+        <div class="row">
+            <!-- Check if the list from backend is empty -->
+            <div th:if="${userMoodList != null and !userMoodList.empty}">
+                <div class="row">
+                    <!-- Loop through moods from database -->
+                    <div class="col-md-4 mb-4" th:each="mood : ${userMoodList}">
+                        <!-- Fixed the conditional class assignment -->
+                        <div class="card mood-card" th:classappend="
+                            ${mood.feel == 'HAPPY'} ? 'mood-happy' : 
+                            (${mood.feel == 'SAD'} ? 'mood-sad' : 
+                            (${mood.feel == 'ANGRY'} ? 'mood-angry' : 
+                            (${mood.feel == 'BORED'} ? 'mood-bored' : 
+                            (${mood.feel == 'EXCITED'} ? 'mood-excited' : 
+                            (${mood.feel == 'CALM'} ? 'mood-calm' : 'mood-neutral')))))">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <div class="d-flex align-items-center">
+                                        <div class="mood-icon">
+                                            <!-- Fixed the conditional emoji assignment -->
+                                            <span th:switch="${mood.feel}">
+                                                <span th:case="'HAPPY'" th:utext="'&#128522;'"></span>
+                                                <span th:case="'SAD'" th:utext="'&#128546;'"></span>
+                                                <span th:case="'ANGRY'" th:utext="'&#128545;'"></span>
+                                                <span th:case="'BORED'" th:utext="'&#128533;'"></span>
+                                                <span th:case="'EXCITED'" th:utext="'&#128525;'"></span>
+                                                <span th:case="'CALM'" th:utext="'&#128578;'"></span>
+                                                <span th:case="*" th:utext="'&#128528;'"></span>
+                                            </span>
+                                        </div>
+                                        <h5 class="card-title mb-0" th:text="${mood.feel}">Mood</h5>
+                                    </div>
+                                    <span class="date-badge" th:text="${#temporals.format(mood.date, 'MMM dd, yyyy')}">Date</span>
+                                </div>
+                                <p class="card-text mb-2" th:text="${#temporals.format(mood.date, 'hh:mm a')}">Time</p>
+                                <p class="note-text" th:text="${mood.note} ?: 'No note provided'">Note content</p>
+                                <div class="d-flex justify-content-end mt-3">
+                                    <!-- Edit button -->
+                                    <a th:href="@{/mood/edit/{id}(id=${mood.id})}" class="btn btn-sm btn-outline-secondary me-2">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </a>
+                                    
+                                    <!-- Delete button with confirmation -->
+                                    <button type="button" class="btn btn-sm btn-outline-danger" 
+                                            data-bs-toggle="modal" 
+                                            th:attr="data-bs-target='#deleteModal'+${mood.id}">
+                                        <i class="fas fa-trash"></i> Delete
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Delete Confirmation Modal for each mood entry -->
+                        <div class="modal fade" th:id="'deleteModal'+${mood.id}" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Confirm Deletion</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Are you sure you want to delete this mood entry from <span th:text="${#temporals.format(mood.date, 'MMM dd, yyyy')}"></span>?</p>
+                                        <p class="text-muted">This action cannot be undone.</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        <!-- Fixed form action to match your controller -->
+                                        <form th:action="@{/mood/deleteNote/{id}(id=${mood.id})}" method="post">
+                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Empty state (shown when list is empty) -->
+            <div th:unless="${userMoodList != null and !userMoodList.empty}" class="col-12">
+                <div class="empty-state">
+                    <i class="fas fa-sticky-note"></i>
+                    <h3>No Mood History Yet</h3>
+                    <p>You haven't recorded any moods yet. Start tracking your emotions to see your history here.</p>
+                    <a th:href="@{/mood/addMoodPage}" class="btn btn-primary">
+                        <i class="fas fa-plus me-2"></i>Record Your First Mood
+                    </a>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

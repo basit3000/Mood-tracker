@@ -2,10 +2,8 @@ package com.example.app.service;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.TextStyle;
 import java.util.List;
-import java.util.Locale;
+
 
 import java.util.Optional;
 
@@ -25,13 +23,15 @@ public class MoodServices {
     UserServices userServices;
 
 
-     public List<Mood> findByUserId(String userEmail) {
-
+     public List<Mood> UserHistoryByEmail(String userEmail) {
         Optional<User> user = userServices.findByEmail(userEmail);
-        System.out.println("qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq");
-        user.get().getId();
         return moodRepository.findByUserId(user.get().getId());
     }
+
+     public List<Mood> UserHistoryByUserID(String userId) {
+        return moodRepository.findByUserId(userId);
+    }
+
 
 
     public Mood saveMood(Mood mood, String email){
@@ -51,5 +51,14 @@ public class MoodServices {
         return moodRepository.save(mood);
     }
   
+
+    public String deleteNote(String id){
+
+        Optional<Mood> userMood = moodRepository.findById(id);
+        String userId =userMood.get().getUserId();
+        moodRepository.deleteById(id);
+        return userId;
+        
+    }
     
 }
