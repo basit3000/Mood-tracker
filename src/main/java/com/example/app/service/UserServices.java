@@ -85,4 +85,10 @@ public class UserServices{
         
     }
     
+
+    public User findByID(String id){
+
+        Optional<User> user = userRepository.findById(id);
+        return user.get();
+    }
 }

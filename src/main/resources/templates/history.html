@@ -251,9 +251,9 @@
                                 <p class="note-text" th:text="${mood.note} ?: 'No note provided'">Note content</p>
                                 <div class="d-flex justify-content-end mt-3">
                                     <!-- Edit button -->
-                                    <a th:href="@{/mood/edit/{id}(id=${mood.id})}" class="btn btn-sm btn-outline-secondary me-2">
-                                        <i class="fas fa-edit"></i> Edit
-                                    </a>
+                                  <form th:action="@{/mood/editNote/{id}(id=${mood.id})}" method="post">
+                                            <button type="submit" class="btn btn-danger">Edit</button>
+                                  </form>
                                     
                                     <!-- Delete button with confirmation -->
                                     <button type="button" class="btn btn-sm btn-outline-danger" 

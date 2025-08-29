@@ -101,4 +101,20 @@ public class MoodController {
      return "redirect:/mood/history";
   }
 
+
+  @PostMapping("/editNote/{id}")
+  public String editNote(@PathVariable("id") String id,Model model){
+    Mood note = moodServices.getNoteById(id);
+    model.addAttribute("Note", note);
+     return "editPage";
+  }
+
+  
+  @PostMapping("/editNote")
+  public String editNote(@ModelAttribute("Note") Mood note){ 
+    
+    User user = userServices.findByID(note.getUserId());
+    moodServices.saveMood(note, user.getEmail());
+     return "redirect:/mood/history";
+  }
 }

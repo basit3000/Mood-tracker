@@ -61,4 +61,10 @@ public class MoodServices {
         
     }
     
+
+    public Mood getNoteById(String id){
+           return moodRepository.findById(id)
+           .orElseThrow(() -> new RuntimeException("Note with id " + id + " not found"));
+        }
 }
+
