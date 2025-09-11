@@ -1,15 +1,15 @@
 package com.example.app.controller;
 
-import com.example.app.Service.UserServices;
+import com.example.app.securityConfig.UserAuth;
+import com.example.app.service.MoodServices;
+import com.example.app.service.UserServices;
 import com.example.app.model.Mood;
 import com.example.app.model.User;
 import com.example.app.repository.MoodRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
@@ -19,8 +19,18 @@ import java.util.Optional;
 @RequestMapping("/mood")
 public class MoodController {
 
+
+
   @Autowired
   UserServices userServices;
+  
+  UserAuth userAuth=new UserAuth();
+  @Autowired
+  MoodServices moodServices;
+
+  
+  String userEmail;
+
   private final MoodRepository moodRepository;
 
   public MoodController(MoodRepository moodRepository) {
@@ -35,13 +45,76 @@ public class MoodController {
   @GetMapping("/dashboard")
   public String showDashBoard(Model model) {
     
-    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-    String userEmail=auth.getName();
-    	
-    Optional<User> user = userServices.findByEmail(userEmail);
- 
-    model.addAttribute(user.get());
-    return "dashboard"; 
+   userEmail=userAuth.getCurrentUserEmail();
+
+   Optional<User> user = userServices.findByEmail(userEmail);
+   model.addAttribute(user.get());
+   return "dashboard"; 
+  }
+
+
+  @GetMapping("/updateDetails")
+  public String updateDetails(Model model) {
+
+    Optional<User> userObj = userServices.findByEmail(userEmail);
+    model.addAttribute("user", userObj.get());
+    return "updatedetails";
+  }
+
+   @PostMapping("/updateDetails")
+  public String updateDetails(@ModelAttribute("user") User user, BindingResult bindingResult, Model model) {
+
+    boolean confirmed=userServices.ConfirmPassword(userEmail, user.getPassword());
+    if (confirmed) {
+      userServices.updateDetails(user);
+      return "dashboard";
+    }
+  
+    bindingResult.rejectValue("password", "error.user", "Password does not match");
+    return "updatedetails";
   }
   
+  @GetMapping("/addMoodPage")
+  public String addMoodPage(Model model){
+    model.addAttribute("mood", new Mood());
+    return "addMoodPage";
+  }
+  
+  @PostMapping("/addMoodPage")
+  public String addMoodPage(@ModelAttribute("mood") Mood mood){
+    moodServices.saveMood(mood,userEmail);
+    
+    return "redirect:/mood/dashboard";
+  }
+
+  @GetMapping("/history")
+  public String historyP(Model model){
+    List<Mood> userMoodList = moodServices.UserHistoryByEmail(userEmail);
+    model.addAttribute("userMoodList", userMoodList);
+    return "history";
+  }
+
+  
+  @PostMapping("/deleteNote/{id}")
+  public String deleteNote(@PathVariable("id") String id){
+    moodServices.deleteNote(id);
+     return "redirect:/mood/history";
+  }
+
+
+  @PostMapping("/editNote/{id}")
+  public String editNote(@PathVariable("id") String id,Model model){
+    Mood note = moodServices.getNoteById(id);
+    model.addAttribute("Note", note);
+     return "editPage";
+  }
+
+  
+  @PostMapping("/editNote")
+  public String editNote(@ModelAttribute("Note") Mood note){ 
+    
+    User user = userServices.findByID(note.getUserId());
+    moodServices.saveMood(note, user.getEmail());
+     return "redirect:/mood/history";
+  }
 }

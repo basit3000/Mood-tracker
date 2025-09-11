@@ -1,4 +1,4 @@
-package com.example.app.Service;
+package com.example.app.service;
 
 import java.util.List;
 import java.util.Optional;
@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.app.securityConfig.UserAuth;
 import com.example.app.model.User;
 import com.example.app.repository.UserRepository;
 import com.mongodb.DuplicateKeyException;
@@ -18,6 +19,9 @@ public class UserServices{
     PasswordEncoder passwordEncoder;
     
     UserRepository userRepository;
+
+    @Autowired
+    UserAuth userAuth;
 
     @Autowired
     public UserServices(UserRepository userRepository) {
@@ -61,5 +65,30 @@ public class UserServices{
     public void deleteUserByid(String id) {
         userRepository.deleteById(id);
     }
+
+    public void updateDetails(User user){
+        Optional<User> oldUser = findByEmail(userAuth.getCurrentUserEmail());
+        User oldUserObj = oldUser.get();
+        oldUserObj.setAge(user.getAge());
+        oldUserObj.setName(user.getName());
+        oldUserObj.setTimezone(user.getTimezone());
+        oldUserObj.setPassword(user.getPassword());
+        
+        save(oldUserObj);
+    }
+
+
+    public boolean ConfirmPassword(String email, String rawPwd){
+        Optional<User> byEmail = findByEmail(email);
+        boolean matches = passwordEncoder.matches(rawPwd,byEmail.get().getPassword());
+        return matches;
+        
+    }
     
+
+    public User findByID(String id){
+
+        Optional<User> user = userRepository.findById(id);
+        return user.get();
+    }
 }

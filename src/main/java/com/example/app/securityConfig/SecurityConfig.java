@@ -1,4 +1,4 @@
-package com.example.app.SecurityConfig;
+package com.example.app.securityConfig;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,22 +12,13 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 	
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
 	
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
 	
-	// AuthenticationManager that uses the above beans
-	@Bean
-	public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-		return config.getAuthenticationManager();
-	}
-	// AuthenticationManager that uses the above beans
+	
 	@Bean
 	public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
 		return config.getAuthenticationManager();
@@ -36,8 +27,8 @@ public class SecurityConfig {
 	@Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable()).authorizeHttpRequests(auth -> auth
-            .requestMatchers("/public/**", "/public/register", "/register", "/css/**", "/js/**")
-            .permitAll()
+            .requestMatchers("/public/**", "/css/**", "/js/**").permitAll()
+            .requestMatchers("/admin/**").hasAuthority("admin")
             .anyRequest().authenticated())
             .formLogin(form -> form
             .loginPage("/public/login")     

@@ -1,4 +1,4 @@
-package com.example.app.SecurityConfig;
+package com.example.app.securityConfig;
 
 import java.util.Collection;
 import java.util.List;

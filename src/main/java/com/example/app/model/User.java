@@ -1,85 +1,120 @@
 package com.example.app.model;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.example.app.customValidations.AgeLimit;
+import com.example.app.customValidations.DuplicateEmail;
+import com.example.app.customValidations.StrongPwd;
+
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 
-@Document("User")
-public class User {
 
-    public User(String name, int age, String email, String role, String password) {
-        this.name = name;
-        this.age = age;
-        this.email = email;
-        this.role = role;
-        this.password = password;
-    }
+    @Document("User")
+    public class User {
 
-    @Id
-    private String id;
     
-    private String name;
-    private int age;
 
-    @Indexed(unique = true) 
-    private String email;
-    private String role;
-    
-    public String getRole() {
-        return role;
-    }
+        @Id
+        private String id;
 
-    public void setRole(String role) {
-        this.role = role;
-    }
+        @Indexed(unique = true) 
+        @Email
+        @DuplicateEmail
+        private String email;
 
-    public String getName() {
+        @StrongPwd
+        @NotBlank
+        private String password;
         
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
+        @NotNull(message = "Age is required")
+        @AgeLimit
+        private Integer age;
+        
+        private String name;
+        private String role;
 
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    private String password;
-
-    @Override
-    public String toString() {
-        return "User [id=" + id + ", name=" + name + ", age=" + age + ", email=" + email + ", role=" + role
-                + ", password=" + password + "]";
-    }
-
-      public User() {   
-    }
-
-    public String getId() {
-        return id;
-    }  
+        private String timezone;
+        
     
-}
+
+
+        
+        
+      
+
+        
+
+        public Integer getAge() {
+            return age;
+        }
+
+        public void setAge(Integer age) {
+            this.age = age;
+        }
+
+        public String getRole() {
+            return role;
+        }
+
+        public void setRole(String role) {
+            this.role = role;
+        }
+
+        public String getName() {
+            
+            return name;
+        }
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        
+
+        public String getEmail() {
+            return email;
+        }
+
+        public void setEmail(String email) {
+            this.email = email;
+        }
+
+        public String getPassword() {
+            return password;
+        }
+
+        public void setPassword(String password) {
+            this.password = password;
+        }
+
+
+        
+        public User() {   
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getTimezone() {
+            return timezone;
+        }
+
+        public void setTimezone(String time) {
+            timezone = time;
+        }
+
+        @Override
+        public String toString() {
+            return "User [id=" + id + ", email=" + email + ", password=" + password + ", age=" + age + ", name=" + name
+                    + ", role=" + role + ", Timezone=" + timezone + "]";
+        }  
+        
+    }
